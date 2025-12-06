@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from '../../components/layout/Header';  
 import PostCard from '../../components/common/PostCard';
 import Button from '../../components/common/Button';
 
@@ -36,36 +37,39 @@ const PostsPage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-800">Posts</h1>
-        <Button onClick={handleAddPost} variant="primary">
-          Add New Post
-        </Button>
-      </div>
-      
-      <div className="mb-8">
-        <p className="text-gray-600">
-          This page displays posts fetched from JSONPlaceholder API. Each post shows the title, content, and author information.
-        </p>
-      </div>
+    <div className="flex flex-col h-screen">  {/* Change this div */}
+      <Header />  {/* Add Header here */}
+      <div className="container mx-auto px-4 py-8 flex-grow">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-800">Posts</h1>
+          <Button onClick={handleAddPost} variant="primary">
+            Add New Post
+          </Button>
+        </div>
+        
+        <div className="mb-8">
+          <p className="text-gray-600">
+            This page displays posts fetched from JSONPlaceholder API. Each post shows the title, content, and author information.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {mockPosts.map((post) => (
-          <PostCard
-            key={post.id}
-            title={post.title}
-            body={post.body}
-            userId={post.userId}
-            id={post.id}
-          />
-        ))}
-      </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {mockPosts.map((post) => (
+            <PostCard
+              key={post.id}
+              title={post.title}
+              body={post.body}
+              userId={post.userId}
+              id={post.id}
+            />
+          ))}
+        </div>
 
-      <div className="mt-8 text-center">
-        <p className="text-gray-500">
-          Showing {mockPosts.length} posts. In the full implementation, posts will be fetched from the API.
-        </p>
+        <div className="mt-8 text-center">
+          <p className="text-gray-500">
+            Showing {mockPosts.length} posts. In the full implementation, posts will be fetched from the API.
+          </p>
+        </div>
       </div>
     </div>
   );
