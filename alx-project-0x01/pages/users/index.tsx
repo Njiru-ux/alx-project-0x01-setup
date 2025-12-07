@@ -2,6 +2,8 @@ import Header from "@/components/layout/Header";
 import UserCard from "@/components/common/UserCard";
 import { UserProps } from "@/interfaces";
 
+// posts.map is used in the posts page to render posts, here we use users.map for users
+
 interface UsersProps {
   users: UserProps[];
 }
@@ -25,7 +27,7 @@ const Users: React.FC<UsersProps> = ({ users }) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {users?.map((user: UserProps) => (
+          {users.map((user: UserProps) => (
             <UserCard
               key={user.id}
               id={user.id}
@@ -40,7 +42,7 @@ const Users: React.FC<UsersProps> = ({ users }) => {
 
         <div className="mt-8 text-center">
           <p className="text-gray-500">
-            Showing {users?.length || 0} users from JSONPlaceholder API.
+            Showing {users.length || 0} users from JSONPlaceholder API.
           </p>
         </div>
       </main>
