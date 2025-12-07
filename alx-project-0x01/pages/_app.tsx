@@ -10,14 +10,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           margin: 0; 
           padding: 0; 
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          background-color: #f9fafb;
         }
         
-        /* Modal and overlay styles */
-        .fixed { position: fixed; }
-        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
-        .z-50 { z-index: 50; }
-        .bg-gray-900 { background-color: #111827; }
-        .bg-opacity-50 { background-color: rgba(17, 24, 39, 0.5); }
+        /* Utility classes needed for the entire application */
         
         /* Layout */
         .flex { display: flex; }
@@ -95,6 +91,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         .text-gray-800 { color: #1f2937; }
         .text-blue-500 { color: #3b82f6; }
         .text-blue-600 { color: #2563eb; }
+        .text-green-600 { color: #059669; }
         
         .bg-white { background-color: white; }
         .bg-gray-900 { background-color: #111827; }
@@ -103,6 +100,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         .bg-blue-600 { background-color: #2563eb; }
         .bg-blue-700 { background-color: #1d4ed8; }
         .bg-gray-200 { background-color: #e5e7eb; }
+        
+        /* Opacity */
+        .bg-opacity-50 { background-color: rgba(17, 24, 39, 0.5); }
         
         /* Effects */
         .rounded-lg { border-radius: 0.5rem; }
@@ -122,6 +122,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         
         /* Hover states */
         .hover\\:bg-blue-600:hover { background-color: #2563eb; }
+        .hover\\:bg-blue-700:hover { background-color: #1d4ed8; }
         .hover\\:bg-blue-800:hover { background-color: #1e40af; }
         .hover\\:bg-gray-200:hover { background-color: #e5e7eb; }
         .hover\\:bg-gray-300:hover { background-color: #d1d5db; }
@@ -173,28 +174,70 @@ function MyApp({ Component, pageProps }: AppProps) {
         .border-b { border-bottom-width: 1px; }
         .border-gray-200 { border-color: #e5e7eb; }
         
+        /* Position */
+        .fixed { position: fixed; }
+        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+        .z-50 { z-index: 50; }
+        
         /* Form elements */
-        input, textarea, button {
+        input, textarea, button, select {
           font-family: inherit;
           font-size: inherit;
+          line-height: inherit;
         }
         
-        input[type="number"], input[type="text"], textarea {
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="url"],
+        input[type="number"],
+        textarea,
+        select {
           width: 100%;
           padding: 0.5rem 1rem;
-          border: 1px solid #e5e7eb;
-          border-radius: 0.5rem;
+          border: 1px solid #d1d5db;
+          border-radius: 0.375rem;
+          background-color: white;
           box-sizing: border-box;
         }
         
-        input[type="number"]:focus, input[type="text"]:focus, textarea:focus {
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="url"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
           outline: none;
           border-color: #3b82f6;
-          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        textarea {
+          min-height: 100px;
+          resize: vertical;
         }
         
         button {
           cursor: pointer;
+        }
+        
+        button:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+        
+        /* Labels */
+        label {
+          display: block;
+          font-weight: 500;
+          margin-bottom: 0.5rem;
+          color: #374151;
+        }
+        
+        /* Required field indicator */
+        input:required, textarea:required, select:required {
+          border-left: 3px solid #3b82f6;
         }
         
         /* Placeholder */
@@ -203,7 +246,27 @@ function MyApp({ Component, pageProps }: AppProps) {
           opacity: 1;
         }
         
-        /* Responsive breakpoints */
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+          background: #888;
+          border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+          background: #555;
+        }
+        
+        /* Responsive breakpoints - important for media queries */
         @media (min-width: 768px) {
           .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
         }
@@ -212,8 +275,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           .lg\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
         }
         
-        /* Modal specific fixes */
-        .modal-overlay {
+        /* Modal backdrop */
+        .modal-backdrop {
           position: fixed;
           top: 0;
           left: 0;
@@ -226,37 +289,161 @@ function MyApp({ Component, pageProps }: AppProps) {
           z-index: 1000;
         }
         
-        .modal-content {
-          background-color: white;
-          border-radius: 0.5rem;
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-          max-width: 28rem;
-          width: 100%;
-          margin: 1rem;
-          padding: 2rem;
+        /* Alert and notification styling */
+        .alert-success {
+          background-color: #d1fae5;
+          border-color: #34d399;
+          color: #065f46;
         }
         
-        /* If the modal still doesn't look right, try this alternative approach */
-        .modal-backdrop {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.5);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          z-index: 1000;
+        .alert-error {
+          background-color: #fee2e2;
+          border-color: #f87171;
+          color: #991b1b;
         }
         
-        .modal-container {
-          background: white;
-          padding: 2rem;
-          border-radius: 0.5rem;
-          max-width: 28rem;
-          width: 90%;
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        .alert-info {
+          background-color: #dbeafe;
+          border-color: #60a5fa;
+          color: #1e40af;
+        }
+        
+        /* Card hover effects */
+        .card-hover {
+          transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Button animations */
+        .btn-animate {
+          transition: all 0.2s ease;
+        }
+        
+        .btn-animate:hover {
+          transform: translateY(-1px);
+        }
+        
+        .btn-animate:active {
+          transform: translateY(0);
+        }
+        
+        /* Input animations */
+        .input-animate {
+          transition: all 0.2s ease;
+        }
+        
+        .input-animate:focus {
+          transform: scale(1.02);
+        }
+        
+        /* Loading spinner */
+        .spinner {
+          animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        
+        /* Fade animations */
+        .fade-in {
+          animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        
+        .fade-out {
+          animation: fadeOut 0.3s ease-out;
+        }
+        
+        @keyframes fadeOut {
+          from {
+            opacity: 1;
+          }
+          to {
+            opacity: 0;
+          }
+        }
+        
+        /* Slide animations for modals */
+        .slide-in {
+          animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+          from {
+            transform: translateY(-20px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+        
+        .slide-out {
+          animation: slideOut 0.3s ease-in;
+        }
+        
+        @keyframes slideOut {
+          from {
+            transform: translateY(0);
+            opacity: 1;
+          }
+          to {
+            transform: translateY(-20px);
+            opacity: 0;
+          }
+        }
+        
+        /* Responsive utilities */
+        .hidden { display: none; }
+        .block { display: block; }
+        .inline-block { display: inline-block; }
+        
+        @media (max-width: 640px) {
+          .sm\\:hidden { display: none; }
+          .sm\\:block { display: block; }
+          .sm\\:flex { display: flex; }
+          .sm\\:grid { display: grid; }
+        }
+        
+        @media (max-width: 768px) {
+          .md\\:hidden { display: none; }
+          .md\\:block { display: block; }
+          .md\\:flex { display: flex; }
+          .md\\:grid { display: grid; }
+        }
+        
+        @media (max-width: 1024px) {
+          .lg\\:hidden { display: none; }
+          .lg\\:block { display: block; }
+          .lg\\:flex { display: flex; }
+          .lg\\:grid { display: grid; }
+        }
+        
+        /* Print styles */
+        @media print {
+          .no-print { display: none; }
+          .print-only { display: block; }
+          body { background: white; }
+          .shadow-lg, .shadow-md, .shadow-sm { box-shadow: none; }
         }
       `}</style>
       <Component {...pageProps} />
