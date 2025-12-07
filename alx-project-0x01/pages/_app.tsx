@@ -12,7 +12,12 @@ function MyApp({ Component, pageProps }: AppProps) {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         
-        /* Utility classes needed for the entire application */
+        /* Modal and overlay styles */
+        .fixed { position: fixed; }
+        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+        .z-50 { z-index: 50; }
+        .bg-gray-900 { background-color: #111827; }
+        .bg-opacity-50 { background-color: rgba(17, 24, 39, 0.5); }
         
         /* Layout */
         .flex { display: flex; }
@@ -40,6 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         
         .p-4 { padding: 1rem; }
         .p-6 { padding: 1.5rem; }
+        .p-8 { padding: 2rem; }
         .px-4 { padding-left: 1rem; padding-right: 1rem; }
         .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
         .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
@@ -85,12 +91,15 @@ function MyApp({ Component, pageProps }: AppProps) {
         .text-white { color: white; }
         .text-gray-500 { color: #6b7280; }
         .text-gray-600 { color: #4b5563; }
+        .text-gray-700 { color: #374151; }
         .text-gray-800 { color: #1f2937; }
         .text-blue-500 { color: #3b82f6; }
         .text-blue-600 { color: #2563eb; }
         
         .bg-white { background-color: white; }
+        .bg-gray-900 { background-color: #111827; }
         .bg-blue-100 { background-color: #dbeafe; }
+        .bg-blue-500 { background-color: #3b82f6; }
         .bg-blue-600 { background-color: #2563eb; }
         .bg-blue-700 { background-color: #1d4ed8; }
         .bg-gray-200 { background-color: #e5e7eb; }
@@ -103,8 +112,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         .shadow-md { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); }
         .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); }
         .hover\\:shadow-md:hover { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); }
-        .hover\\:shadow-xl:hover { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); }
         .hover\\:shadow-lg:hover { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); }
+        .hover\\:shadow-xl:hover { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); }
         
         .transition { transition: all 0.2s ease; }
         .transition-colors { transition-property: color, background-color, border-color; }
@@ -112,11 +121,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         .duration-300 { transition-duration: 300ms; }
         
         /* Hover states */
+        .hover\\:bg-blue-600:hover { background-color: #2563eb; }
         .hover\\:bg-blue-800:hover { background-color: #1e40af; }
         .hover\\:bg-gray-200:hover { background-color: #e5e7eb; }
-        .hover\\:bg-blue-700:hover { background-color: #1d4ed8; }
         .hover\\:bg-gray-300:hover { background-color: #d1d5db; }
         .hover\\:text-blue-600:hover { color: #2563eb; }
+        .hover\\:text-gray-800:hover { color: #1f2937; }
         .hover\\:underline:hover { text-decoration: underline; }
         
         /* Container */
@@ -129,6 +139,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         /* Max width */
         .max-w-md { max-width: 28rem; }
         .max-w-xl { max-width: 36rem; }
+        .w-full { width: 100%; }
         
         /* Background gradients */
         .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-stops)); }
@@ -141,9 +152,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         /* For the UserCard component */
         .w-12 { width: 3rem; }
         .w-16 { width: 4rem; }
+        .w-5 { width: 1.25rem; }
         .h-12 { height: 3rem; }
         .h-16 { height: 4rem; }
+        .h-5 { height: 1.25rem; }
         .mr-4 { margin-right: 1rem; }
+        .mr-3 { margin-right: 0.75rem; }
         .space-y-3 > * + * { margin-top: 0.75rem; }
         
         /* Focus states */
@@ -154,12 +168,42 @@ function MyApp({ Component, pageProps }: AppProps) {
         .focus\\:ring-gray-400:focus { box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.5); }
         
         /* Border */
-        .border { border-width: 1px; }
+        .border { border-width: 1px; border-color: #e5e7eb; }
         .border-t { border-top-width: 1px; }
         .border-b { border-bottom-width: 1px; }
         .border-gray-200 { border-color: #e5e7eb; }
         
-        /* Responsive breakpoints - important for media queries */
+        /* Form elements */
+        input, textarea, button {
+          font-family: inherit;
+          font-size: inherit;
+        }
+        
+        input[type="number"], input[type="text"], textarea {
+          width: 100%;
+          padding: 0.5rem 1rem;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.5rem;
+          box-sizing: border-box;
+        }
+        
+        input[type="number"]:focus, input[type="text"]:focus, textarea:focus {
+          outline: none;
+          border-color: #3b82f6;
+          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+        
+        button {
+          cursor: pointer;
+        }
+        
+        /* Placeholder */
+        ::placeholder {
+          color: #9ca3af;
+          opacity: 1;
+        }
+        
+        /* Responsive breakpoints */
         @media (min-width: 768px) {
           .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
         }
@@ -168,8 +212,52 @@ function MyApp({ Component, pageProps }: AppProps) {
           .lg\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
         }
         
-        /* Specific component styles */
-        .hover\\:shadow-md:hover { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); }
+        /* Modal specific fixes */
+        .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 1000;
+        }
+        
+        .modal-content {
+          background-color: white;
+          border-radius: 0.5rem;
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+          max-width: 28rem;
+          width: 100%;
+          margin: 1rem;
+          padding: 2rem;
+        }
+        
+        /* If the modal still doesn't look right, try this alternative approach */
+        .modal-backdrop {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+        }
+        
+        .modal-container {
+          background: white;
+          padding: 2rem;
+          border-radius: 0.5rem;
+          max-width: 28rem;
+          width: 90%;
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
       `}</style>
       <Component {...pageProps} />
     </>
