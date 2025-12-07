@@ -1,7 +1,7 @@
 import Header from "@/components/layout/Header";
 import UserCard from "@/components/common/UserCard";
 import UserModal from "@/components/common/UserModal";
-import { UserData, UserProps } from "@/interfaces";
+import { UserProps, UserData } from "@/interfaces";
 import { useState } from "react";
 
 interface UsersProps {
@@ -10,22 +10,31 @@ interface UsersProps {
 
 const Users: React.FC<UsersProps> = ({ users }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [newUser, setNewUser] = useState<UserData | null>(null);
+  const [newUser, setNewUser] = useState<UserProps | null>(null);
 
-  const handleAddUser = (userData: UserData) => {
+  const handleAddUser = (userData: UserProps) => {
     // Generate a new ID (last user ID + 1 or 1 if no users)
     const newId = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
-    const userToAdd = { ...userData, id: newId };
+    
+    // Create the new user with proper ID
+    const userToAdd: UserProps = {
+      id: newId,
+      name: userData.name,
+      username: userData.username,
+      email: userData.email,
+      phone: userData.phone,
+      website: userData.website
+    };
+    
     setNewUser(userToAdd);
     console.log("New user added:", userToAdd);
     
-    // In a real app, you would update the state or send to API
-    // For now, we'll just log it and update local state for demonstration
+    // Show success message
     alert(`User "${userData.name}" added successfully! (Check console for details)`);
   };
 
   // Combine existing users with new user if exists
-  const allUsers = newUser ? [newUser as UserProps, ...users] : users;
+  const allUsers = newUser ? [newUser, ...users] : users;
 
   return (
     <div className="flex flex-col min-h-screen">

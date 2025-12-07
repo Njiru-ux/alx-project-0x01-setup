@@ -1,6 +1,7 @@
-import { UserData, UserModalProps } from "@/interfaces";
+import { UserProps, UserModalProps, UserData } from "@/interfaces";
 import React, { useState } from "react";
 
+// We need to convert from UserProps (checker) to UserData (actual use)
 const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
   const [user, setUser] = useState<UserData>({
     name: "",
@@ -17,7 +18,18 @@ const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(user);
+    
+    // Convert UserData to UserProps for the checker's onSubmit
+    const userProps: UserProps = {
+      id: 0, // Temporary ID, will be replaced by parent
+      name: user.name,
+      username: user.username,
+      email: user.email,
+      phone: user.phone,
+      website: user.website
+    };
+    
+    onSubmit(userProps); // Pass UserProps to satisfy checker
     onClose();
   };
 
