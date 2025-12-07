@@ -8,6 +8,7 @@ export interface PostProps {
 export interface UserProps {
   id: number;
   name: string;
+  username: string;
   email: string;
   phone: string;
   website: string;
@@ -16,6 +17,10 @@ export interface UserProps {
     suite: string;
     city: string;
     zipcode: string;
+    geo: {
+      lat: string;
+      lng: string;
+    };
   };
   company?: {
     name: string;

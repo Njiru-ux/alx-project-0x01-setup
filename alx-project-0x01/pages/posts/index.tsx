@@ -2,12 +2,11 @@ import PostCard from "@/components/common/PostCard";
 import Header from "@/components/layout/Header";
 import { PostProps } from "@/interfaces";
 
-interface PostsPageProps {
+interface PostsProps {
   posts: PostProps[];
 }
 
-const PostsPage: React.FC<PostsPageProps> = ({ posts }) => {
-  console.log(posts)
+const Posts: React.FC<PostsProps> = ({ posts }) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -20,31 +19,31 @@ const PostsPage: React.FC<PostsPageProps> = ({ posts }) => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {
-            posts?.map(({ title, body, userId, id }: PostProps, key: number) => (
+            posts?.map((post: PostProps, index: number) => (
               <PostCard 
-                title={title} 
-                body={body} 
-                userId={userId} 
-                id={id} 
-                key={key} 
+                key={post.id}
+                title={post.title}
+                body={post.body}
+                userId={post.userId}
+                id={post.id}
               />
             ))
           }
         </div>
       </main>
     </div>
-  )
+  );
 }
 
 export async function getStaticProps() {
-  const response = await fetch("https://jsonplaceholder.typicode.com/posts")
-  const posts = await response.json()
+  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const posts = await response.json();
 
   return {
     props: {
       posts
     }
-  }
+  };
 }
 
-export default PostsPage;
+export default Posts;
